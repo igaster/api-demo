@@ -19,11 +19,11 @@ class SubscriberResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'email' => $this->email,
             'address' => $this->address,
             'state' => $this->state,
-             'fields' => new FieldCollectionResource($this->whenLoaded('fields')),
-//            'fields' => new FieldCollectionResource($this->fields),
+            'fields' => FieldResource::collection($this->whenLoaded('fields')),
         ];
     }
 }

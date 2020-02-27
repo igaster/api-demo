@@ -2,6 +2,9 @@
 
 namespace Tests;
 
+use App\Models\Field;
+use App\Models\Subscriber;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\SQLiteConnection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -41,13 +44,27 @@ abstract class TestCase extends BaseTestCase
         if (DB::connection() instanceof SQLiteConnection) {
             DB::statement(DB::raw('PRAGMA foreign_keys=on'));
         }
-
-        // $this->seed();
     }
 
     public function tearDown(): void
     {
         parent::tearDown();
     }
+
+    // -----------------------------------------------
+    //  Helpers
+    // -----------------------------------------------
+
+    protected function seedSubscribersWithFields(int $countSubscribers, int $countFields = 0): Collection
+    {
+        return factory(Subscriber::class, $countSubscribers)->create()->each(function (Subscriber $subscriber) use ($countFields){
+
+            $subscriber->fields()->createMany(
+                factory(Field::class, $countFields)->make()->toArray()
+            );
+
+        });
+    }
+
 
 }
