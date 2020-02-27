@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Field extends Model
 {
+
     const TYPE_DATE = "date";
     const TYPE_NUMBER= "number";
     const TYPE_STRING = "string";
@@ -20,9 +21,9 @@ class Field extends Model
     //  Relationships
     // ----------------------------------------------
 
-     public function user() : BelongsTo
+     public function subscriber() : BelongsTo
      {
-         return $this->belongsTo(User::class, 'user_id');
+         return $this->belongsTo(Subscriber::class, 'subscriber_id');
      }
 
     // ----------------------------------------------

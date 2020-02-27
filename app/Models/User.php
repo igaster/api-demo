@@ -11,12 +11,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const STATE_ACTIVE = "active";
-    const STATE_UNSUBSCRIBED= "unsubscribed";
-    const STATE_JUNK = "junk";
-    const STATE_BOUNCHED = "bounced";
-    const STATE_UNCONFIRMED = "unconfirmed";
-
     protected $fillable = [
         'name', 'email', 'password',
     ];
@@ -29,16 +23,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // ----------------------------------------------
-    //  Relationships
-    // ----------------------------------------------
-
-     public function fields(): HasMany
-     {
-         return $this->hasMany(Field::class,'user_id');
-     }
-
-    // ----------------------------------------------
-    //  Methods
-    // ----------------------------------------------
 }

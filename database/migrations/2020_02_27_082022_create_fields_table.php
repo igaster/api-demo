@@ -17,12 +17,12 @@ class CreateFieldsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('type');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('subscriber_id');
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('subscriber_id')
                 ->references('id')
-                ->on('users')
+                ->on('subscribers')
                 ->onDelete('cascade');
         });
     }
