@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Subscribers;
 
+use App\Rules\ValidEmailHost;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -24,7 +25,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'   => 'required|email', // active_url
+            'email' => ['required', 'email', new ValidEmailHost()],
         ];
     }
 }

@@ -87,7 +87,7 @@ class SubscribersTest extends TestCase
     public function testCreateSubscriber()
     {
         $data = [
-            'email' => 'test@email.com',
+            'email' => 'test@gmail.com',
             'address' => 'dummy address',
             'name' => 'Giannis',
             'state' => Subscriber::STATE_UNCONFIRMED,

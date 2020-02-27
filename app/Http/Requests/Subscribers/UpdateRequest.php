@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Subscribers;
 
+use App\Rules\ValidEmailHost;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -24,7 +25,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'   => 'email', // active_url
+            'email' => ['email', new ValidEmailHost()]
         ];
     }
 }

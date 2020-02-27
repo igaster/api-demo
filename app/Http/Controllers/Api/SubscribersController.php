@@ -14,7 +14,7 @@ class SubscribersController extends Controller
 {
     public function index()
     {
-        return SubscriberResource::collection(Subscriber::all());
+        return SubscriberResource::collection(Subscriber::with('fields')->get());
     }
 
     public function show(Subscriber $subscriber)
