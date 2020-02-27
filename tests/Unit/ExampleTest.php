@@ -3,11 +3,6 @@
 namespace Tests\Unit;
 
 use App\Models\Subscriber;
-use App\Models\User;
-use Illuminate\Database\SQLiteConnection;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
