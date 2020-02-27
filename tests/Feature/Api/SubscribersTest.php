@@ -102,6 +102,27 @@ class SubscribersTest extends TestCase
         $this->assertDatabaseHas('subscribers', $data);
     }
 
+    public function testCreateSubscriberValidation()
+    {
+        $data = [
+            'email' => 'xxx',
+            'address' => 'dummy address',
+            'name' => 'Giannis',
+            'state' => Subscriber::STATE_UNCONFIRMED,
+        ];
+
+        $response = $this->json('POST', 'api/subscribers', $data);
+
+
+        $response->assertStatus(422)
+            ->assertJsonStructure([
+                'message',
+                'errors' => ['*' => []]
+            ]);
+
+    }
+
+
     public function testUpdateSubscriber()
     {
         $subscriber = Subscriber::create([

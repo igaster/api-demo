@@ -11,6 +11,8 @@ class FieldsTest extends TestCase
 
     public function testUpdateField()
     {
+        $this->seedSubscribersWithFields(1,3);
+
         $field = Subscriber::first()->fields()->create([
            'title' => '1st Field',
            'type' => Field::TYPE_STRING,
@@ -50,7 +52,5 @@ class FieldsTest extends TestCase
             'id' => $field->id,
         ]);
     }
-
-
 
 }
