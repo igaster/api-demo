@@ -12,5 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('subscribers.index');
 });
+
+
+Route::resource('subscribers', 'SubscribersController')->only(['index', 'create', 'store']);

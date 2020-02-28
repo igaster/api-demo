@@ -25,6 +25,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'min:5',
             'email' => ['email', new ValidEmailHost()]
         ];
     }
