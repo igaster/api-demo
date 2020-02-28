@@ -17,36 +17,40 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['as' => 'api.'], function() {
 
-Route::group(['prefix' => 'subscribers'], function() {
+    Route::group(['prefix' => 'subscribers'], function() {
 
-    Route::get('/', 'Api\SubscribersController@index')->name('subscribers');
+        Route::get('/', 'Api\SubscribersController@index')->name('subscribers');
 
-    Route::get('{subscriber}', 'Api\SubscribersController@show')->name('subscribers.show');
+        Route::get('{subscriber}', 'Api\SubscribersController@show')->name('subscribers.show');
 
-    Route::post('/', 'Api\SubscribersController@store')->name('subscribers.store');
+        Route::post('/', 'Api\SubscribersController@store')->name('subscribers.store');
 
-    Route::post('{subscriber}', 'Api\SubscribersController@update')->name('subscribers.update');
+        Route::post('{subscriber}', 'Api\SubscribersController@update')->name('subscribers.update');
 
-    Route::delete('{subscriber}', 'Api\SubscribersController@destroy')->name('subscribers.destroy');
+        Route::delete('{subscriber}', 'Api\SubscribersController@destroy')->name('subscribers.destroy');
 
 
-    Route::group(['prefix' => '{subscriber}'], function() {
+        Route::group(['prefix' => '{subscriber}'], function() {
 
-        Route::get('fields', 'Api\SubscriberFieldsController@index')->name('subscriber-fields.store');
+            Route::get('fields', 'Api\SubscriberFieldsController@index')->name('subscriber-fields.store');
 
-        Route::post('fields', 'Api\SubscriberFieldsController@store')->name('subscriber-fields.store');
+            Route::post('fields', 'Api\SubscriberFieldsController@store')->name('subscriber-fields.store');
+
+        });
 
     });
 
-});
+    Route::group(['prefix' => 'fields'], function() {
 
-Route::group(['prefix' => 'fields'], function() {
+        Route::post('{field}', 'Api\FieldsController@update')->name('fields.update');
 
-    Route::post('{field}', 'Api\FieldsController@update')->name('fields.update');
+        Route::delete('{field}', 'Api\FieldsController@destroy')->name('fields.destroy');
 
-    Route::delete('{field}', 'Api\FieldsController@destroy')->name('fields.destroy');
+        Route::delete('fields/{field}', 'Api\FieldsController@destroy')->name('subscriber-fields.destroy');
 
-    Route::delete('fields/{field}', 'Api\FieldsController@destroy')->name('subscriber-fields.destroy');
+    });
+
 
 });
