@@ -79,7 +79,7 @@
                 }).then(({data}) => {
                     this.subscribers = data.data;
                 }).catch((error) => {
-                    console.log(error.response.data.message );
+                    this.alert(error);
                 });
             },
 
@@ -101,6 +101,10 @@
                 });
             },
 
+            alert(error) {
+                console.log(error.response.data);
+                this.$swal('Error',error.response.data.message,'error');
+            }
 
         },
 

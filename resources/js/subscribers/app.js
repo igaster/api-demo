@@ -8,6 +8,10 @@ require('../bootstrap');
 
 window.Vue = require('vue');
 
+import VueSwal from 'vue-swal';
+
+Vue.use(VueSwal);
+
 Vue.component('subscribers', require('./components/Subscribers.vue').default);
 
 /**

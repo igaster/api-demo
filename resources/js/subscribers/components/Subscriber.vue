@@ -135,7 +135,7 @@
                 }).then(({data}) => {
                     this.fields = data.data;
                 }).catch((error) => {
-                    console.log(error.response.data.message );
+                    this.alert(error);
                 });
             },
 
@@ -159,7 +159,7 @@
                     this.field_title = '';
                     this.field_type = '';
                 }).catch((error) => {
-                    console.log(error.response.data.message );
+                    this.alert(error);
                 });
             },
 
@@ -173,7 +173,7 @@
                 }).then(({data}) => {
                     this.removeField(field);
                 }).catch((error) => {
-                    console.log(error.response.data.message );
+                    this.alert(error);
                 });
             },
 
@@ -203,8 +203,13 @@
                 }).then(({data}) => {
                     this.$emit('subscriber-updated', data.data);
                 }).catch((error) => {
-                    console.log(error.response.data.message );
+                    this.alert(error);
                 });
+            },
+
+            alert(error) {
+                console.log(error.response.data);
+                this.$swal('Error',error.response.data.message,'error');
             }
         },
 
