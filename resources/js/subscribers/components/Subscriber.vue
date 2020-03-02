@@ -2,28 +2,37 @@
     <div>
         <h1>{{ subscriber.name }}</h1>
 
+        <div v-if="errors" class="alert alert-danger" role="alert">
+            <div class="font-weight-bold">Oops! Please, fix the following errors:</div>
+            <ul class="mb-0">
+                <template v-for="(messages, error) in errors">
+                    <li v-for="message in messages">{{ error }}: {{ message}}</li>
+                </template>
+            </ul>
+        </div>
+
         <div class="card mb-4">
 
             <div class="card-body">
 
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" v-model="subscriber_form.name" class="form-control">
+                    <input type="text" v-model="subscriber_form.name" class="form-control" :class="{ 'is-invalid': hasErrors('name') }">
                 </div>
 
                 <div class="form-group">
                     <label>email:</label>
-                    <input type="email" v-model="subscriber_form.email" class="form-control">
+                    <input type="email" v-model="subscriber_form.email" class="form-control" :class="{ 'is-invalid': hasErrors('email') }">
                 </div>
 
                 <div class="form-group">
                     <label>Address:</label>
-                    <input type="text" v-model="subscriber_form.address" class="form-control" >
+                    <input type="text" v-model="subscriber_form.address" class="form-control" :class="{ 'is-invalid': hasErrors('address') }" >
                 </div>
 
                 <div class="form-group">
-                    <label>Status</label>
-                    <select class="form-control" v-model="subscriber_form.state">
+                    <label>State</label>
+                    <select class="form-control" v-model="subscriber_form.state" :class="{ 'is-invalid': hasErrors('state') }">
                         <option value="active">Active</option>
                         <option value="bounced">Bounced</option>
                         <option value="junk">Junk</option>
@@ -100,6 +109,7 @@
                 address: null,
                 state: null,
             },
+            errors: null
         }},
 
         watch: {
@@ -158,6 +168,7 @@
                     this.addField(data.data);
                     this.field_title = '';
                     this.field_type = '';
+                    this.errors=null;
                 }).catch((error) => {
                     this.alert(error);
                 });
@@ -202,6 +213,7 @@
                     },
                 }).then(({data}) => {
                     this.$emit('subscriber-updated', data.data);
+                    this.errors=null;
                 }).catch((error) => {
                     this.alert(error);
                 });
@@ -210,6 +222,14 @@
             alert(error) {
                 console.log(error.response.data);
                 this.$swal('Error',error.response.data.message,'error');
+
+                if(error.response.data.hasOwnProperty('errors')) {
+                    this.errors = error.response.data.errors;
+                }
+            },
+
+            hasErrors(input_name) {
+                return (this.errors && this.errors.hasOwnProperty(input_name));
             }
         },
 

@@ -1983,6 +1983,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "subscriber",
   // -----------------------------------------------
@@ -2004,7 +2013,8 @@ __webpack_require__.r(__webpack_exports__);
         email: null,
         address: null,
         state: null
-      }
+      },
+      errors: null
     };
   },
   watch: {
@@ -2062,6 +2072,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.field_title = '';
         _this2.field_type = '';
+        _this2.errors = null;
       })["catch"](function (error) {
         _this2.alert(error);
       });
@@ -2110,6 +2121,8 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref4.data;
 
         _this4.$emit('subscriber-updated', data.data);
+
+        _this4.errors = null;
       })["catch"](function (error) {
         _this4.alert(error);
       });
@@ -2117,6 +2130,13 @@ __webpack_require__.r(__webpack_exports__);
     alert: function alert(error) {
       console.log(error.response.data);
       this.$swal('Error', error.response.data.message, 'error');
+
+      if (error.response.data.hasOwnProperty('errors')) {
+        this.errors = error.response.data.errors;
+      }
+    },
+    hasErrors: function hasErrors(input_name) {
+      return this.errors && this.errors.hasOwnProperty(input_name);
     }
   },
   // -----------------------------------------------
@@ -37617,6 +37637,33 @@ var render = function() {
   return _c("div", [
     _c("h1", [_vm._v(_vm._s(_vm.subscriber.name))]),
     _vm._v(" "),
+    _vm.errors
+      ? _c(
+          "div",
+          { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+          [
+            _c("div", { staticClass: "font-weight-bold" }, [
+              _vm._v("Oops! Please, fix the following errors:")
+            ]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "mb-0" },
+              [
+                _vm._l(_vm.errors, function(messages, error) {
+                  return _vm._l(messages, function(message) {
+                    return _c("li", [
+                      _vm._v(_vm._s(error) + ": " + _vm._s(message))
+                    ])
+                  })
+                })
+              ],
+              2
+            )
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "card mb-4" }, [
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "form-group" }, [
@@ -37632,6 +37679,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: { "is-invalid": _vm.hasErrors("name") },
             attrs: { type: "text" },
             domProps: { value: _vm.subscriber_form.name },
             on: {
@@ -37658,6 +37706,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: { "is-invalid": _vm.hasErrors("email") },
             attrs: { type: "email" },
             domProps: { value: _vm.subscriber_form.email },
             on: {
@@ -37684,6 +37733,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
+            class: { "is-invalid": _vm.hasErrors("address") },
             attrs: { type: "text" },
             domProps: { value: _vm.subscriber_form.address },
             on: {
@@ -37698,7 +37748,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("Status")]),
+          _c("label", [_vm._v("State")]),
           _vm._v(" "),
           _c(
             "select",
@@ -37712,6 +37762,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
+              class: { "is-invalid": _vm.hasErrors("state") },
               on: {
                 change: function($event) {
                   var $$selectedVal = Array.prototype.filter

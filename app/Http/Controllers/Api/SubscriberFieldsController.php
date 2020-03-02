@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Fields\StoreRequest;
 use App\Http\Resources\FieldResource;
 use App\Http\Resources\SubscriberResource;
 use App\Models\Field;
@@ -17,7 +18,7 @@ class SubscriberFieldsController extends Controller
         return FieldResource::collection($subscriber->fields);
     }
 
-    public function store(Subscriber $subscriber, Request $request)
+    public function store(Subscriber $subscriber, StoreRequest $request)
     {
         $field = $subscriber->fields()->create($request->only([
             'title',
