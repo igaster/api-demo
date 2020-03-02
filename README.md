@@ -29,3 +29,7 @@ You don't need a database connection to run tests (SQLite in memory database is 
 To run all tests execute phpunit:
 
 - `vendor/bin/phpunit`
+
+## API documentation
+
+Created with swagger: https://subscribersapi1.docs.apiary.io
